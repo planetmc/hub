@@ -492,28 +492,43 @@
     e.preventDefault();
 
     const video = document.createElement("video");
-    video.src = "https://qu.ax/LtiXH.mp4"; // Link al video
+    video.src = "https://qu.ax/LtiXH.mp4";
     video.autoplay = true;
-    video.controls = false; // puoi mettere true se vuoi i controlli
+    video.controls = false; // niente controlli
     video.style.width = "100%";
     video.style.height = "100%";
+    video.style.backgroundColor = "black";
 
     document.body.appendChild(video);
 
-    // Chiedi fullscreen
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) { /* Safari */
-      video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) { /* IE11 */
-      video.msRequestFullscreen();
-    }
-
-    // Quando finisce il video
-    video.addEventListener("ended", () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
+    // Listener per bloccare ESC
+    const escHandler = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
       }
+    };
+    document.addEventListener("keydown", escHandler, true);
+
+    // Fullscreen
+    const requestFullscreen = () => {
+      if (video.requestFullscreen) video.requestFullscreen();
+      else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+      else if (video.msRequestFullscreen) video.msRequestFullscreen();
+    };
+    requestFullscreen();
+
+    // Alla fine del video
+    video.addEventListener("ended", () => {
+      // Rimuove listener ESC
+      document.removeEventListener("keydown", escHandler, true);
+
+      // Esce dal fullscreen
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+
       video.remove();
     });
   });
