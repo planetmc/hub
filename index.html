@@ -491,17 +491,30 @@
   btn.addEventListener("click", (e) => {
     e.preventDefault();
 
+    // Overlay nero
+    const overlay = document.createElement("div");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      top: "0",
+      left: "0",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "black",
+      zIndex: "10000"
+    });
+    document.body.appendChild(overlay);
+
+    // Video
     const video = document.createElement("video");
     video.src = "https://qu.ax/LtiXH.mp4";
     video.autoplay = true;
-    video.controls = false; // niente controlli
+    video.controls = false;
     video.style.width = "100%";
     video.style.height = "100%";
     video.style.backgroundColor = "black";
+    overlay.appendChild(video);
 
-    document.body.appendChild(video);
-
-    // Listener per bloccare ESC
+    // Blocca ESC
     const escHandler = (e) => {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -512,24 +525,22 @@
 
     // Fullscreen
     const requestFullscreen = () => {
-      if (video.requestFullscreen) video.requestFullscreen();
-      else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
-      else if (video.msRequestFullscreen) video.msRequestFullscreen();
+      if (overlay.requestFullscreen) overlay.requestFullscreen();
+      else if (overlay.webkitRequestFullscreen) overlay.webkitRequestFullscreen();
+      else if (overlay.msRequestFullscreen) overlay.msRequestFullscreen();
     };
     requestFullscreen();
 
     // Alla fine del video
     video.addEventListener("ended", () => {
-      // Rimuove listener ESC
       document.removeEventListener("keydown", escHandler, true);
 
-      // Esce dal fullscreen
       if (document.fullscreenElement || document.webkitFullscreenElement) {
         if (document.exitFullscreen) document.exitFullscreen();
         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
       }
 
-      video.remove();
+      overlay.remove();
     });
   });
 
