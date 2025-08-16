@@ -318,8 +318,8 @@
 
         .free-rank-btn{
   position:fixed;
-  inset-block-end:16px;
-  inset-inline-end:16px;
+  bottom:16px;   /* distanza dal fondo */
+  right:16px;    /* distanza dal lato destro */
   z-index:9999;
   display:inline-block;
   font:600 12px/1.1 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
@@ -391,7 +391,6 @@
   .free-rank-btn::before{ animation:none }
 }
 
-        
         /* Responsive */
         @media (max-width: 600px) {
             .container {
