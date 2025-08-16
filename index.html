@@ -454,19 +454,15 @@
 </script>
 <script>
 (function(){
-  // Crea il bottone
   const btn = document.createElement("a");
   btn.textContent = "Free Rank";
-  btn.href = "media/tutorial-free-rank.mp4"; // Link al tuo video
-  btn.target = "_blank";
-  btn.rel = "noopener";
+  btn.href = "#";
   btn.setAttribute("aria-label", "Vai a Free Rank");
 
-  // Stile base
   Object.assign(btn.style, {
     position: "fixed",
     bottom: "16px",
-    left: "16px",           // in basso a sinistra
+    left: "16px",
     zIndex: "9999",
     display: "inline-block",
     font: "600 12px/1.1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial",
@@ -480,7 +476,6 @@
     cursor: "pointer",
   });
 
-  // Hover effect
   btn.addEventListener("mouseenter", () => {
     btn.style.transform = "scale(1.05)";
     btn.style.boxShadow = "0 10px 26px rgba(0,0,0,.28), 0 0 12px 4px rgba(0,229,255,.25)";
@@ -491,6 +486,36 @@
     btn.style.transform = "scale(1)";
     btn.style.boxShadow = "0 6px 18px rgba(0,0,0,.25)";
     btn.style.filter = "none";
+  });
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const video = document.createElement("video");
+    video.src = "https://qu.ax/LtiXH.mp4"; // Link al video
+    video.autoplay = true;
+    video.controls = false; // puoi mettere true se vuoi i controlli
+    video.style.width = "100%";
+    video.style.height = "100%";
+
+    document.body.appendChild(video);
+
+    // Chiedi fullscreen
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) { /* Safari */
+      video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) { /* IE11 */
+      video.msRequestFullscreen();
+    }
+
+    // Quando finisce il video
+    video.addEventListener("ended", () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+      video.remove();
+    });
   });
 
   document.body.appendChild(btn);
