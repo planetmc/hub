@@ -7,33 +7,25 @@
     <meta property="og:title" content="Hub PlanetMC" />
     <meta property="og:description" content="Tutti i link PlanetMC!" />
     <title>PlanetMC - Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            --aqua: #00ffff;
-            --green: #00ff7f;
-            --dark-bg: #0a0a12;
-            --card-bg: rgba(15, 15, 25, 0.8);
-            --text-color: #f0f0f0;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: var(--dark-bg);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #050505 0%, #0a0a14 50%, #0d0f1a 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            padding: 20px;
+            color: #e0e0e0;
             position: relative;
+            overflow-x: hidden;
         }
         
         .bg-animation {
@@ -49,10 +41,10 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3),
-                        0 0 20px rgba(0, 255, 255, 0.3),
-                        0 0 30px rgba(0, 255, 255, 0.3);
+            background: rgba(0, 100, 255, 0.08);
+            box-shadow: 0 0 8px rgba(0, 100, 255, 0.2),
+                        0 0 15px rgba(0, 100, 255, 0.15),
+                        0 0 25px rgba(0, 100, 255, 0.1);
             border-radius: 50%;
             animation: animate 15s linear infinite;
         }
@@ -98,10 +90,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 1;
+                opacity: 0.3;
             }
             90% {
-                opacity: 1;
+                opacity: 0.3;
             }
             100% {
                 transform: scale(1) translateY(-500px) rotate(360deg);
@@ -110,100 +102,88 @@
         }
         
         .container {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            max-width: 900px;
+            width: 100%;
+            background: linear-gradient(145deg, #121220, #1a1a2a);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
             text-align: center;
+            border: 1px solid #252538;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+            color: #ffffff;
+            padding: 50px 20px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            border-bottom: 1px solid #003366;
         }
         
-        .container:hover {
-            transform: translateY(-5px);
-        }
-        
-        .container::before {
-            content: '';
+        .header::before {
+            content: "";
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                transparent,
-                transparent,
-                transparent,
-                rgba(0, 255, 255, 0.1),
-                rgba(0, 255, 127, 0.1)
-            );
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
             transform: rotate(30deg);
-            animation: shine 6s infinite;
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: rotate(30deg) translate(-30%, -30%);
-            }
-            100% {
-                transform: rotate(30deg) translate(30%, 30%);
-            }
-        }
-        
-        .header {
-            margin-bottom: 30px;
         }
         
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 48px;
+            font-weight: 800;
             margin-bottom: 10px;
-            background: linear-gradient(to right, var(--aqua), var(--green));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+            position: relative;
+            letter-spacing: 1px;
         }
         
         .header p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            padding: 50px 40px;
+            background: linear-gradient(145deg, #0f0f1a, #151525);
         }
         
         .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
         
         .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
+            padding: 18px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
+            gap: 15px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
             color: white;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-decoration: none; /* Rimuove la sottolineatura */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         .btn::before {
@@ -213,7 +193,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             transition: 0.5s;
         }
         
@@ -222,38 +202,95 @@
         }
         
         .btn-copy-ip {
-            background: linear-gradient(45deg, var(--aqua), var(--green));
-            font-weight: 600;
+            background: linear-gradient(135deg, #0055aa, #003377);
+        }
+        
+        .btn-copy-ip:hover {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
         }
         
         .btn-discord {
-            background: linear-gradient(45deg, #5865F2, #7289DA);
+            background: linear-gradient(135deg, #3a4bb5, #2d3a8c);
+        }
+        
+        .btn-discord:hover {
+            background: linear-gradient(135deg, #4752c4, #363f9e);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.3);
         }
         
         .btn-tiktok {
-            background: linear-gradient(45deg, #000000, #FE2C55);
+            background: linear-gradient(135deg, #000000, #b31e40);
+        }
+        
+        .btn-tiktok:hover {
+            background: linear-gradient(135deg, #1a1a1a, #cc2b4e);
+            box-shadow: 0 10px 25px rgba(254, 44, 85, 0.3);
         }
         
         .btn-forum {
-            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        }
+        
+        .btn-forum:hover {
+            background: linear-gradient(135deg, #388e3c, #2e7d32);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
         }
         
         .btn-store {
-            background: linear-gradient(45deg, #FF9800, #FFC107);
+            background: linear-gradient(135deg, #b26a00, #8c5100);
+        }
+        
+        .btn-store:hover {
+            background: linear-gradient(135deg, #cc7a00, #b26a00);
+            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.3);
         }
         
         .btn-vote {
-            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            background: linear-gradient(135deg, #6a1b9a, #4a148c);
+        }
+        
+        .btn-vote:hover {
+            background: linear-gradient(135deg, #8e24aa, #6a1b9a);
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
         }
         
         .btn i {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
         
         .footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            background: linear-gradient(135deg, #0a0a14, #0f0f1a);
+            color: #8a8a9a;
+            font-size: 14px;
+            border-top: 1px solid #1a1a2a;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: #8a8a9a;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .social-links a:hover {
+            color: #70a1ff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         .tooltip {
@@ -264,11 +301,11 @@
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 120px;
-            background-color: #333;
-            color: #fff;
+            background-color: #1a1a2a;
+            color: #e0e0e0;
             text-align: center;
             border-radius: 6px;
-            padding: 5px;
+            padding: 8px;
             position: absolute;
             z-index: 1;
             bottom: 125%;
@@ -277,6 +314,8 @@
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.8rem;
+            border: 1px solid #252538;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .tooltip .tooltiptext::after {
@@ -287,7 +326,7 @@
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: #333 transparent transparent transparent;
+            border-color: #1a1a2a transparent transparent transparent;
         }
         
         .tooltip:hover .tooltiptext {
@@ -299,36 +338,144 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 255, 127, 0.9);
+            background: linear-gradient(135deg, #006644, #008855);
             color: white;
             padding: 15px 25px;
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
             transform: translateX(200%);
             transition: transform 0.3s ease;
             z-index: 1000;
             display: flex;
             align-items: center;
             gap: 10px;
+            border: 1px solid rgba(0, 255, 127, 0.2);
         }
         
         .notification.show {
             transform: translateX(0);
         }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-                width: 95%;
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
             }
             
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                padding: 15px 20px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 32px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+        }
+        
+        /* Animazione di ingresso */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .server-info {
+            background: linear-gradient(145deg, #151525, #1a1a2a);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #252538;
+        }
+        
+        .server-info h3 {
+            color: #70a1ff;
+            margin-bottom: 15px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .server-info p {
+            color: #a0a0b0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Effetto glow sui bordi */
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #003366, #0066cc, #004499, #002244);
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: glow 3s linear infinite;
+        }
+        
+        @keyframes glow {
+            0% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0.2;
+            }
+        }
+        
+        /* Effetto particelle aggiuntivo */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(100, 150, 255, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="bg-animation">
@@ -339,47 +486,62 @@
         <span></span>
     </div>
     
+    <div class="particles" id="particles"></div>
+    
     <div class="container">
         <div class="header">
             <h1>PlanetMC</h1>
-            <p> </p>
+            <p>Tutti i link PlanetMC in un unico posto!</p>
         </div>
         
-        <div class="buttons">
-            <button class="btn btn-copy-ip tooltip" id="copy-ip-btn">
-                <i class="fas fa-copy"></i>
-                Copia IP
-                <span class="tooltiptext">Clicca per copiare</span>
-            </button>
+        <div class="content">
+            <div class="server-info">
+                <h3><i class="fas fa-server"></i> Server Minecraft</h3>
+                <p>Unisciti alla nostra community di Minecraft con modalità uniche e tantissimi giocatori!</p>
+            </div>
             
-            <a href="https://discord.planetmc.pro" target="_blank" class="btn btn-discord">
-                <i class="fab fa-discord"></i>
-                Discord
-            </a>
+            <div class="buttons">
+                <button class="btn btn-copy-ip tooltip" id="copy-ip-btn">
+                    <i class="fas fa-copy"></i>
+                    Copia IP
+                    <span class="tooltiptext">Clicca per copiare</span>
+                </button>
+                
+                <a href="https://discord.planetmc.pro" target="_blank" class="btn btn-discord">
+                    <i class="fab fa-discord"></i>
+                    Discord
+                </a>
 
-            <a href="https://tiktok.com/@planetmc.pro" target="_blank" class="btn btn-tiktok">
-                <i class="fab fa-tiktok"></i>
-                TikTok
-            </a>
-            
-            <a href="https://planetmc.pro" target="_blank" class="btn btn-forum">
-                <i class="fas fa-comments"></i>
-                Forum
-            </a>
-            
-            <a href="https://store.planetmc.pro" target="_blank" class="btn btn-store">
-                <i class="fas fa-shopping-cart"></i>
-                Store
-            </a>
-            
-            <a href="https://vote.planetmc.pro" target="_blank" class="btn btn-vote">
-                <i class="fas fa-vote-yea"></i>
-                Vota
-            </a>
+                <a href="https://tiktok.com/@planetmc.pro" target="_blank" class="btn btn-tiktok">
+                    <i class="fab fa-tiktok"></i>
+                    TikTok
+                </a>
+                
+                <a href="https://planetmc.pro" target="_blank" class="btn btn-forum">
+                    <i class="fas fa-comments"></i>
+                    Forum
+                </a>
+                
+                <a href="https://store.planetmc.pro" target="_blank" class="btn btn-store">
+                    <i class="fas fa-shopping-cart"></i>
+                    Store
+                </a>
+                
+                <a href="https://vote.planetmc.pro" target="_blank" class="btn btn-vote">
+                    <i class="fas fa-vote-yea"></i>
+                    Vota
+                </a>
+            </div>
         </div>
         
         <div class="footer">
-            &copy; 2025 PlanetMC. Tutti i diritti riservati.
+            <p>&copy; 2025 PlanetMC. Tutti i diritti riservati.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </div>
     
@@ -389,12 +551,30 @@
     </div>
     
     <script>
+        // Creazione particelle
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posizione casuale
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 15) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
         document.getElementById('copy-ip-btn').addEventListener('click', function() {
             const ip = 'play.planetmc.pro';
             
             const textarea = document.createElement('textarea');
             textarea.value = ip;
-            textarea.style.position = 'fixed';  // Fuori dallo schermo
+            textarea.style.position = 'fixed';
             textarea.style.left = '-9999px';
             textarea.style.top = '-9999px';
             document.body.appendChild(textarea);
@@ -413,7 +593,6 @@
             
             document.body.removeChild(textarea);
             
-            // Prova con l'API moderna se disponibile
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(ip).catch(err => {
                     console.error('Errore API clipboard:', err);
@@ -447,6 +626,27 @@
                     ripple.remove();
                 }, 1000);
             });
+        });
+        
+        // Aggiunge un effetto di digitazione al titolo
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.header p');
+            const originalText = header.textContent;
+            header.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    header.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 80);
+                }
+            };
+            
+            setTimeout(typeWriter, 800);
+            
+            // Crea le particelle
+            createParticles();
         });
     </script>
     <script>
