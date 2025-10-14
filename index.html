@@ -16,6 +16,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
         body {
             background: linear-gradient(135deg, #050505 0%, #0a0a14 50%, #0d0f1a 100%);
             min-height: 100vh;
@@ -25,16 +30,16 @@
             padding: 20px;
             color: #e0e0e0;
             position: relative;
-            overflow-x: hidden;
         }
         
         .bg-animation {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
+            pointer-events: none;
         }
         
         .bg-animation span {
@@ -111,6 +116,7 @@
             text-align: center;
             border: 1px solid #252538;
             position: relative;
+            margin: 0 auto;
         }
         
         .header {
@@ -449,7 +455,7 @@
         
         /* Effetto particelle aggiuntivo */
         .particles {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -474,6 +480,11 @@
             100% {
                 transform: translateY(-100px) translateX(20px);
             }
+        }
+
+        /* Fix per il problema dello scroll */
+        .no-scroll {
+            overflow: hidden;
         }
     </style>
 </head>
@@ -612,6 +623,9 @@
         const buttons = document.querySelectorAll('.btn');
         buttons.forEach(button => {
             button.addEventListener('click', function(e) {
+                // Previene comportamenti indesiderati
+                e.preventDefault();
+                
                 const x = e.clientX - e.target.getBoundingClientRect().left;
                 const y = e.clientY - e.target.getBoundingClientRect().top;
                 
@@ -647,6 +661,15 @@
             
             // Crea le particelle
             createParticles();
+            
+            // Previene lo scroll su elementi interattivi
+            document.querySelectorAll('button, a').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#' || this.tagName === 'BUTTON') {
+                        e.preventDefault();
+                    }
+                });
+            });
         });
     </script>
     <script>
