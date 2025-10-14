@@ -261,6 +261,17 @@
             box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
         }
         
+        .btn-staff {
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000000;
+            font-weight: 700;
+        }
+        
+        .btn-staff:hover {
+            background: linear-gradient(135deg, #ffd700, #d4af37);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+        
         .btn i {
             font-size: 1.5rem;
         }
@@ -542,6 +553,11 @@
                     <i class="fas fa-vote-yea"></i>
                     Vota
                 </a>
+
+                <a href="https://candidatura.planetmc.pro" target="_blank" class="btn btn-staff">
+                    <i class="fas fa-user-tie"></i>
+                    Candidati Staff
+                </a>
             </div>
         </div>
         
@@ -616,26 +632,26 @@
             }, 3000);
         }
         
+        // Fix per i pulsanti - rimuove il preventDefault che blocca i link
         const buttons = document.querySelectorAll('.btn');
         buttons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                // Previene comportamenti indesiderati
-                e.preventDefault();
-                
-                const x = e.clientX - e.target.getBoundingClientRect().left;
-                const y = e.clientY - e.target.getBoundingClientRect().top;
-                
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 1000);
-            });
+            if (button.tagName === 'BUTTON') {
+                button.addEventListener('click', function(e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 1000);
+                });
+            }
         });
         
         // Aggiunge un effetto di digitazione al titolo
@@ -657,15 +673,6 @@
             
             // Crea le particelle
             createParticles();
-            
-            // Previene lo scroll su elementi interattivi
-            document.querySelectorAll('button, a').forEach(element => {
-                element.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === '#' || this.tagName === 'BUTTON') {
-                        e.preventDefault();
-                    }
-                });
-            });
         });
     </script>
     <script>
