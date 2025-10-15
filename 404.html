@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://qu.ax/aMUgy.png">
-    <title>Candidature Chiuse - Errore 404</title>
+    <title>Pagina Non Trovata - Errore 404</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -79,7 +79,7 @@
             padding: 50px 40px;
         }
         
-        .closed-message {
+        .error-message {
             background: linear-gradient(135deg, #2d1b1b, #3d2222);
             border-left: 5px solid #ff4757;
             padding: 25px;
@@ -89,7 +89,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .closed-message h3 {
+        .error-message h3 {
             color: #ff6b6b;
             margin-bottom: 15px;
             font-size: 26px;
@@ -98,7 +98,7 @@
             gap: 10px;
         }
         
-        .closed-message p {
+        .error-message p {
             color: #e0e0e0;
             line-height: 1.7;
             font-size: 16px;
@@ -274,20 +274,31 @@
         </div>
         
         <div class="content">
-            <div class="closed-message">
-                <h3><i class="fas fa-exclamation-circle"></i> Candidature Chiuse</h3>
-                <p>Ci dispiace informarti che il periodo per l'invio delle candidature è terminato. Al momento non è possibile presentare nuove domande di partecipazione. Il processo di selezione è attualmente in fase di valutazione e abbiamo raggiunto il numero massimo di candidature accettabili.</p>
+            <div class="error-message">
+                <h3><i class="fas fa-exclamation-circle"></i> Pagina Non Trovata</h3>
+                <p>La pagina che stai tentando di raggiungere non esiste o è stata spostata. Potrebbe essere stato inserito un indirizzo errato o la pagina potrebbe essere stata rimossa.</p>
             </div>
             
             <div class="info-box">
                 <div class="info-item">
-                    <h4><i class="fas fa-calendar-times"></i> Termine Scaduto</h4>
-                    <p>La finestra per le candidature si è chiusa il 14/10/2025. Entra nel server discord per sapere quando aprono le candidature.</p>
+                    <h4><i class="fas fa-search"></i> Cosa puoi fare</h4>
+                    <p>Controlla che l'URL sia corretto, utilizza la funzione di ricerca del sito o naviga tramite il menu principale.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4><i class="fas fa-home"></i> Ritorna alla Home</h4>
+                    <p>Torna alla pagina principale del sito e naviga attraverso i contenuti disponibili.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4><i class="fas fa-question-circle"></i> Hai bisogno di aiuto?</h4>
+                    <p>Se pensi che questo sia un errore, contatta l'assistenza per segnalare il problema.</p>
                 </div>
             </div>
             
             <div class="actions">
                 <a href="index.html" class="btn btn-primary"><i class="fas fa-home"></i> Torna alla Homepage</a>
+                <a href="javascript:history.back()" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Torna Indietro</a>
             </div>
         </div>
         
