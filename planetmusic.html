@@ -73,51 +73,6 @@
             background: linear-gradient(145deg, #0f0f1a, #151525);
         }
         
-        .api-section {
-            background: linear-gradient(145deg, #151525, #1a1a2a);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #252538;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .api-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(145deg, #252536, #2f2f4a);
-            color: #e0e0e0;
-            font-size: 16px;
-            border: 1px solid #3a3a5a;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-        }
-        
-        .api-input:focus {
-            outline: none;
-            border-color: #4dabf7;
-            box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.3);
-        }
-        
-        .api-btn {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #4dabf7, #339af0);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(51, 154, 240, 0.3);
-        }
-        
-        .api-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(51, 154, 240, 0.4);
-        }
-        
         .search-section {
             margin-bottom: 30px;
         }
@@ -423,8 +378,24 @@
             100% { transform: rotate(360deg); }
         }
         
-        .hidden {
-            display: none;
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .status-success {
+            background: rgba(0, 255, 127, 0.1);
+            color: #00ff7f;
+            border: 1px solid rgba(0, 255, 127, 0.3);
+        }
+        
+        .status-error {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+            border: 1px solid rgba(255, 71, 87, 0.3);
         }
     </style>
 </head>
@@ -436,18 +407,11 @@
         </div>
         
         <div class="content">
-            <div class="api-section" id="apiSection">
-                <h3 style="color: #70a1ff; margin-bottom: 15px;"><i class="fas fa-key"></i> Configurazione API</h3>
-                <input type="text" class="api-input" id="apiKeyInput" placeholder="Inserisci la tua YouTube API Key...">
-                <button class="api-btn" id="saveApiBtn">
-                    <i class="fas fa-save"></i> Salva API Key
-                </button>
-                <p style="font-size: 12px; color: #8a8a9a; margin-top: 10px;">
-                    Ottieni la tua API Key da: <a href="https://console.cloud.google.com/" style="color: #70a1ff;">Google Cloud Console</a>
-                </p>
+            <div class="status-message status-success" id="statusMessage">
+                <i class="fas fa-check-circle"></i> API Key configurata correttamente!
             </div>
             
-            <div class="search-section hidden" id="searchSection">
+            <div class="search-section">
                 <div class="search-box">
                     <input type="text" class="search-input" id="searchInput" placeholder="Cerca una canzone, artista o album...">
                     <button class="search-btn" id="searchBtn">
@@ -460,9 +424,9 @@
                 <i class="fas fa-spinner"></i> Caricamento...
             </div>
             
-            <div class="player-section hidden" id="playerSection">
+            <div class="player-section">
                 <div class="now-playing" id="nowPlaying">
-                    <img src="" class="thumbnail" id="currentThumbnail" alt="Thumbnail">
+                    <div class="thumbnail" id="currentThumbnail"></div>
                     <div class="track-info">
                         <div class="track-title" id="currentTitle">Nessuna traccia selezionata</div>
                         <div class="track-artist" id="currentArtist">Cerca e seleziona una canzone</div>
@@ -496,7 +460,7 @@
                 </div>
             </div>
             
-            <div class="results-section hidden" id="resultsSection">
+            <div class="results-section" id="resultsSection">
                 <div class="result-item" style="text-align: center; color: #8a8a9a;">
                     <i class="fas fa-search"></i> I risultati della ricerca appariranno qui
                 </div>
@@ -510,8 +474,10 @@
     </div>
 
     <script>
+        // Configurazione - API Key preimpostata
+        const YOUTUBE_API_KEY = 'AIzaSyDKGowJbLDoQwnXzvBd8V4TqRz0hVlPW7M';
+        
         // Variabili globali
-        let youtubeApiKey = '';
         let player;
         let currentTrackIndex = 0;
         let searchResults = [];
@@ -519,14 +485,10 @@
         let updateTimer;
 
         // Elementi DOM
-        const apiSection = document.getElementById('apiSection');
-        const apiKeyInput = document.getElementById('apiKeyInput');
-        const saveApiBtn = document.getElementById('saveApiBtn');
-        const searchSection = document.getElementById('searchSection');
+        const statusMessage = document.getElementById('statusMessage');
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const loading = document.getElementById('loading');
-        const playerSection = document.getElementById('playerSection');
         const resultsSection = document.getElementById('resultsSection');
         const currentThumbnail = document.getElementById('currentThumbnail');
         const currentTitle = document.getElementById('currentTitle');
@@ -541,34 +503,10 @@
         const duration = document.getElementById('duration');
         const volumeSlider = document.getElementById('volumeSlider');
 
-        // Carica API Key salvata
-        function loadSavedApiKey() {
-            const savedKey = localStorage.getItem('planetmusic_apikey');
-            if (savedKey) {
-                youtubeApiKey = savedKey;
-                apiKeyInput.value = savedKey;
-                showMainInterface();
-            }
-        }
-
-        // Mostra interfaccia principale
-        function showMainInterface() {
-            apiSection.classList.add('hidden');
-            searchSection.classList.remove('hidden');
-            playerSection.classList.remove('hidden');
-            resultsSection.classList.remove('hidden');
-            
-            // Carica YouTube IFrame API
-            loadYouTubeAPI();
-        }
-
-        // Carica YouTube IFrame API
-        function loadYouTubeAPI() {
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
+        // Nascondi il messaggio di stato dopo 3 secondi
+        setTimeout(() => {
+            statusMessage.style.display = 'none';
+        }, 3000);
 
         // Inizializzazione YouTube IFrame API
         function onYouTubeIframeAPIReady() {
@@ -583,8 +521,11 @@
         }
 
         function onPlayerReady(event) {
-            console.log('Player PlanetMusic pronto');
+            console.log('Player PlanetMusic pronto!');
             event.target.setVolume(50);
+            
+            // Test della API Key
+            testApiKey();
         }
 
         function onPlayerStateChange(event) {
@@ -601,19 +542,31 @@
             }
         }
 
+        // Test della API Key
+        async function testApiKey() {
+            try {
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=test&type=video&key=${YOUTUBE_API_KEY}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error('API Key non valida');
+                }
+                
+                console.log('API Key verificata con successo!');
+            } catch (error) {
+                showError('Errore API Key: ' + error.message);
+            }
+        }
+
         // Funzioni di ricerca
         async function searchYouTube(query) {
-            if (!youtubeApiKey) {
-                alert('Per favore inserisci prima la tua YouTube API Key!');
-                return;
-            }
-
             loading.style.display = 'block';
             resultsSection.innerHTML = '';
 
             try {
                 const response = await fetch(
-                    `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${encodeURIComponent(query)}&type=video&videoCategoryId=10&key=${youtubeApiKey}`
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${encodeURIComponent(query)}&type=video&videoCategoryId=10&key=${YOUTUBE_API_KEY}`
                 );
                 
                 if (!response.ok) {
@@ -625,11 +578,7 @@
                 displayResults(searchResults);
             } catch (error) {
                 console.error('Errore nella ricerca:', error);
-                resultsSection.innerHTML = `
-                    <div class="result-item" style="text-align: center; color: #ff6b6b;">
-                        <i class="fas fa-exclamation-triangle"></i> Errore nella ricerca: ${error.message}
-                    </div>
-                `;
+                showError('Errore nella ricerca: ' + error.message);
             } finally {
                 loading.style.display = 'none';
             }
@@ -648,8 +597,10 @@
                 resultItem.className = 'result-item';
                 resultItem.onclick = () => playTrack(index);
                 
+                const thumbnailUrl = item.snippet.thumbnails.default ? item.snippet.thumbnails.default.url : '';
+                
                 resultItem.innerHTML = `
-                    <img src="${item.snippet.thumbnails.default.url}" class="result-thumbnail" alt="${item.snippet.title}">
+                    <img src="${thumbnailUrl}" class="result-thumbnail" alt="${item.snippet.title}" onerror="this.style.display='none'">
                     <div class="result-info">
                         <div class="result-title">${item.snippet.title}</div>
                         <div class="result-channel">${item.snippet.channelTitle}</div>
@@ -670,7 +621,10 @@
             const track = searchResults[index].snippet;
             
             // Aggiorna UI
-            currentThumbnail.src = track.thumbnails.medium ? track.thumbnails.medium.url : track.thumbnails.default.url;
+            const thumbnailUrl = track.thumbnails.medium ? track.thumbnails.medium.url : (track.thumbnails.default ? track.thumbnails.default.url : '');
+            if (thumbnailUrl) {
+                currentThumbnail.innerHTML = `<img src="${thumbnailUrl}" style="width: 100%; height: 100%; border-radius: 6px; object-fit: cover;">`;
+            }
             currentTitle.textContent = track.title;
             currentArtist.textContent = track.channelTitle;
             
@@ -745,18 +699,19 @@
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
 
-        // Event Listeners
-        saveApiBtn.addEventListener('click', () => {
-            const apiKey = apiKeyInput.value.trim();
-            if (apiKey) {
-                youtubeApiKey = apiKey;
-                localStorage.setItem('planetmusic_apikey', apiKey);
-                showMainInterface();
-            } else {
-                alert('Per favore inserisci una API Key valida!');
-            }
-        });
+        function showError(message) {
+            statusMessage.className = 'status-message status-error';
+            statusMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            statusMessage.style.display = 'block';
+        }
 
+        function showSuccess(message) {
+            statusMessage.className = 'status-message status-success';
+            statusMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            statusMessage.style.display = 'block';
+        }
+
+        // Event Listeners
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim();
             if (query) {
@@ -779,8 +734,11 @@
         progressContainer.addEventListener('click', seekTo);
         volumeSlider.addEventListener('input', setVolume);
 
-        // Inizializzazione
-        document.addEventListener('DOMContentLoaded', loadSavedApiKey);
+        // Carica YouTube IFrame API
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     </script>
 
     <!-- Player YouTube nascosto -->
