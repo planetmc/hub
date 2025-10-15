@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesso Bloccato - Errore 403</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://qu.ax/aMUgy.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: linear-gradient(145deg, #1e1e2e, #2d2d44);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            text-align: center;
+            border: 1px solid #33334d;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8b0000 0%, #b22222 100%);
+            color: #ffffff;
+            padding: 50px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header h1 {
+            font-size: 140px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .header h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        .blocked-message {
+            background: linear-gradient(135deg, #2d1b1b, #3d2222);
+            border-left: 5px solid #ff4757;
+            padding: 25px;
+            margin-bottom: 35px;
+            border-radius: 8px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blocked-message h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .blocked-message p {
+            color: #e0e0e0;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        
+        .info-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 220px;
+            padding: 25px 20px;
+            background: linear-gradient(145deg, #252536, #2f2f4a);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3a3a5a;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-item h4 {
+            color: #70a1ff;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .info-item p {
+            color: #b8b8cc;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4dabf7, #339af0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(51, 154, 240, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #339af0, #228be6);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(51, 154, 240, 0.5);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #495057, #343a40);
+            color: #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #5a6268, #495057);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 107, 107, 0.5);
+        }
+        
+        .footer {
+            padding: 25px;
+            background: linear-gradient(135deg, #151521, #1c1c2e);
+            color: #a0a0b0;
+            font-size: 14px;
+            border-top: 1px solid #2a2a3a;
+        }
+        
+        .security-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .security-links a {
+            color: #a0a0b0;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        
+        .security-links a:hover {
+            color: #70a1ff;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 100px;
+            }
+            
+            .header h2 {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .info-box {
+                flex-direction: column;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 80px;
+            }
+            
+            .header h2 {
+                font-size: 24px;
+            }
+        }
+        
+        /* Animazione di ingresso */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* Icona di blocco animata */
+        .lock-icon {
+            animation: lockShake 2s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes lockShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        
+        /* Effetto particelle di sicurezza */
+        .security-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .security-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 71, 87, 0.6);
+            border-radius: 50%;
+            animation: securityFloat 15s infinite linear;
+        }
+        
+        @keyframes securityFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="security-particles" id="securityParticles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>403</h1>
+            <h2>Accesso Negato</h2>
+            <p>Il sito che stai tentando di visitare è stato bloccato</p>
+        </div>
+        
+        <div class="content">
+            <div class="blocked-message">
+                <h3><i class="fas fa-ban lock-icon"></i> Accesso Bloccato</h3>
+                <p>Il sito che stai tentando di raggiungere è stato bloccato per motivi di sicurezza.</p>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-item">
+                    <h4><i class="fas fa-shield-alt"></i> Motivo del Blocco</h4>
+                    <p>Questa risorsa è stata identificata come potenzialmente pericolosa o non conforme alle policy di sicurezza del network.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Possibili Cause</h4>
+                    <p>Il blocco potrebbe essere dovuto a manutenzioni di sistema.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4><i class="fas fa-user-lock"></i> Azioni Possibili</h4>
+                    <p>Se ritieni che questo sia un errore, Apri ticket su discord.</p>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <a href="javascript:history.back()" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Torna Indietro
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Homepage
+                </a>
+                <a href="https://discord.planetmc.pro" class="btn btn-warning">
+                    <i class="fas fa-envelope"></i> Contatta Supporto
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 PlanetMC. Tutti i diritti riservati.</p>
+            <div class="security-links">
+                <a href="#" title="Termini di Servizio"><i class="fas fa-file-contract"></i></a>
+                <a href="#" title="Server Discord di Assistenza"><i class="fas fa-headset"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Creazione particelle di sicurezza
+        function createSecurityParticles() {
+            const particlesContainer = document.getElementById('securityParticles');
+            const particleCount = 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('security-particle');
+                
+                // Posizione casuale
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Aggiunge un effetto di digitazione al titolo
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.header p');
+            const originalText = header.textContent;
+            header.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    header.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 80);
+                }
+            };
+            
+            setTimeout(typeWriter, 800);
+            
+            // Crea le particelle di sicurezza
+            createSecurityParticles();
+            
+            // Aggiunge log di sicurezza
+            console.log('🔒 403 Access Denied - Security Event Logged');
+            console.log('🚫 Blocked resource access attempt detected');
+            console.log('📋 User agent:', navigator.userAgent);
+            console.log('🌐 Referrer:', document.referrer || 'Direct access');
+        });
+        
+        // Previene il click destro per sicurezza aggiuntiva
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Previene l'inspector del browser
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
