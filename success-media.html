@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://qu.ax/aMUgy.png">
+    <title>Candidatura Inviata - PlanetMC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: linear-gradient(145deg, #1e1e2e, #2d2d44);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            text-align: center;
+            border: 1px solid #33334d;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #006644 0%, #008855 100%);
+            color: #ffffff;
+            padding: 50px 20px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #005533;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .content {
+            padding: 50px 40px;
+            background: linear-gradient(145deg, #0f0f1a, #151525);
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #1b3d2d, #2a4d3e);
+            border-left: 5px solid #00ff7f;
+            padding: 25px;
+            margin-bottom: 35px;
+            border-radius: 8px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .success-message h3 {
+            color: #00ff7f;
+            margin-bottom: 15px;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .success-message p {
+            color: #e0e0e0;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        
+        .info-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 220px;
+            padding: 25px 20px;
+            background: linear-gradient(145deg, #252536, #2f2f4a);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3a3a5a;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-item h4 {
+            color: #70a1ff;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .info-item p {
+            color: #b8b8cc;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            color: white;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #7289DA, #5865F2);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(88, 101, 242, 0.5);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #4dabf7, #339af0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(51, 154, 240, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #339af0, #228be6);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(51, 154, 240, 0.5);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #495057, #343a40);
+            color: #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-home:hover {
+            background: linear-gradient(135deg, #5a6268, #495057);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer {
+            padding: 25px;
+            background: linear-gradient(135deg, #151521, #1c1c2e);
+            color: #8a8a9a;
+            font-size: 14px;
+            border-top: 1px solid #2a2a3a;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: #8a8a9a;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #70a1ff;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .info-box {
+                flex-direction: column;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+        }
+        
+        /* Animazione di ingresso */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* Animazione check */
+        .check-icon {
+            animation: checkBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes checkBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Contatore */
+        .counter {
+            font-size: 14px;
+            color: #00ff7f;
+            margin-top: 10px;
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(0, 255, 127, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 127, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-check-circle check-icon"></i> Candidatura Inviata!</h1>
+            <p>La tua richiesta è stata registrata con successo</p>
+        </div>
+        
+        <div class="content">
+            <div class="success-message">
+                <h3><i class="fas fa-paper-plane"></i> Candidatura Inviata</h3>
+                <p>La tua candidatura per lo staff di PlanetMC è stata inviata correttamente! Il tuo modulo è stato ricevuto e verrà esaminato dal team di selezione. Riceverai una notifica via email non appena ci sarà un aggiornamento sulla tua candidatura.</p>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-item">
+                    <h4><i class="fas fa-clock"></i> Tempi di Valutazione</h4>
+                    <p>La valutazione delle candidature richiede solitamente 7-14 giorni lavorativi. Ti contatteremo non appena avremo esaminato la tua richiesta.</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4><i class="fab fa-discord"></i> Server Discord</h4>
+                    <p>Unisciti al nostro server Discord per rimanere aggiornato e per eventuali comunicazioni rapide riguardanti la tua candidatura.</p>
+                </div>
+              
+            </div>
+            
+            <div class="actions">
+                <a href="https://discord.planetmc.pro" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-discord"></i> Unisciti al Discord
+                </a>
+                <a href="https://planetmc.pro" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-globe"></i> Visita il Sito
+                </a>
+                <a href="index.html" class="btn btn-home">
+                    <i class="fas fa-home"></i> Torna alla Home
+                </a>
+            </div>
+            
+            <div class="counter" id="counter">
+                <i class="fas fa-history"></i> La pagina si aggiornerà in: <span id="countdown">30</span>s
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 PlanetMC Staff Team. Tutti i diritti riservati.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contatore per il redirect
+        let countdown = 30;
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                window.location.href = "index.html";
+            }
+        }
+        
+        // Avvia il countdown
+        setInterval(updateCountdown, 1000);
+        
+        // Aggiunge un effetto di digitazione al titolo
+        document.addEventListener('DOMContentLoaded', function() {
+            const message = document.querySelector('.success-message p');
+            const originalText = message.textContent;
+            message.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    message.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 30);
+                }
+            };
+            
+            setTimeout(typeWriter, 800);
+            
+            // Salva nel localStorage che la candidatura è stata inviata
+            localStorage.setItem('planetmc_candidatura_inviata', 'true');
+            localStorage.setItem('planetmc_candidatura_data', new Date().toISOString());
+            
+            // Log di conferma
+            console.log('✅ Candidatura registrata con successo');
+            console.log('📅 Data invio:', new Date().toLocaleString());
+            console.log('👤 User agent:', navigator.userAgent);
+        });
+    </script>
+</body>
+</html>
